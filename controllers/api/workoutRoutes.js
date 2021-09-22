@@ -9,3 +9,9 @@ router.get("/", (req, res) => {
     .then(dbWorkout => {res.json(dbWorkout)})
     .catch(err => {res.status(400).json(err)})
 });
+
+router.post("/", ({body}, res) => {
+    Workout.create({})
+    .then(dbWorkout => {res.json(dbWorkout)})
+    .catch(err => {res.status(400).json(err)})
+})
