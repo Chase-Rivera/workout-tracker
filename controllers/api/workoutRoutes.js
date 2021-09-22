@@ -14,4 +14,11 @@ router.post("/", ({body}, res) => {
     Workout.create({})
     .then(dbWorkout => {res.json(dbWorkout)})
     .catch(err => {res.status(400).json(err)})
-})
+});
+
+router.put("/:id", (req, res) => {
+    Workout.updateOne({_id: req.params.id}, {$push: {excersises: req.body}})
+    .then(dbWorkout => {res.json(dbWorkout)})
+    .catch(err => {res.status(400).json(err)})
+});
+
