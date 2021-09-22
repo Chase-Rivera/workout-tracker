@@ -1,0 +1,11 @@
+const router = require("express").Router();
+const Workout = require("../../models/workoutModel");
+
+router.get("/", (req, res) => {
+    Workout.aggregate([{
+        $addFields: {totalDuration: {$sum: "$excersise.duration"}}
+    }])
+    .sort({ day: 1})
+    .then(dbWorkout => {res.json(dbWorkout)})
+    .catch(err => {res.status(400).json(err)})
+});
