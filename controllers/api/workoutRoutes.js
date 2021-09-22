@@ -22,3 +22,13 @@ router.put("/:id", (req, res) => {
     .catch(err => {res.status(400).json(err)})
 });
 
+router.get("/range", (req, res) => {
+    Workout.aggregate([{
+        $addFields: {totalDuration: {$sum: "$excersises.duration"}}
+    }])
+    .sort({_id: -1})
+    .limit(7)
+    .then(dbWorkout => {res.json(dbWorkout.reverse())})
+    .catch(err => {res.status(400).json(err)})
+});
+
