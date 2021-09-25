@@ -1,4 +1,4 @@
-const router = rquire("express").Router();
+const router = require("express").Router();
 const workoutRoutes = require("./workoutRoutes");
 
 router.use("/workouts", workoutRoutes);
