@@ -5,7 +5,7 @@ router.get("/", (req, res) => {
     Workout.aggregate([
         {
             $addFields: {
-                totalDuration: { $sum: "$excersise.duration" }
+                totalDuration: { $sum: "$exercises.duration" }
             }
     }
 ])
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     })
 });
 
-router.post("/", ({body}, res) => {
+router.post("/", (req, res) => {
     Workout.create({})
     .then(dbWorkout => {
         res.json(dbWorkout);
@@ -29,7 +29,8 @@ router.post("/", ({body}, res) => {
 });
 
 router.put("/:id", (req, res) => {
-    Workout.updateOne({ _id: req.params.id }, {  $push: { excersises: req.body } })
+    console.log(req.body)
+    Workout.updateOne({ _id: req.params.id }, {  $push: { exercises: req.body } })
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -41,7 +42,7 @@ router.put("/:id", (req, res) => {
 router.get("/range", (req, res) => {
     Workout.aggregate([{
         $addFields: {
-            totalDuration: {$sum: "$excersises.duration"}
+            totalDuration: {$sum: "$exercises.duration"}
         }
     }
 ])
@@ -54,4 +55,6 @@ router.get("/range", (req, res) => {
         res.status(400).json(err);
     })
 });
+
+module.exports = router;
 
